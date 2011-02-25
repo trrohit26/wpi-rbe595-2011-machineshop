@@ -1,5 +1,6 @@
 import sys
-from CVtypes import cv
+#from CVtypes import cv
+from opencv import cv
  
 def detect(image):
     image_size = cv.GetSize(image)

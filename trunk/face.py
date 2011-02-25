@@ -6,14 +6,14 @@
 import sys, os
 from opencv.cv import *
 from opencv.highgui import *
-	
+
 def detectObject(image):
   grayscale = cvCreateImage(cvSize(640, 480), 8, 1)
   cvCvtColor(image, grayscale, CV_BGR2GRAY)
   storage = cvCreateMemStorage(0)
   cvClearMemStorage(storage)
   cvEqualizeHist(grayscale, grayscale)
-  cascade = cvLoadHaarClassifierCascade('haarcascade_frontalface_alt.xml',
+  cascade = cvLoadHaarClassifierCascade('haarcascade_fullbody.xml',
                                         cvSize(1,1))
   faces = cvHaarDetectObjects(grayscale, cascade, storage, 1.2, 2, 
                               CV_HAAR_DO_CANNY_PRUNING, cvSize(100,100))
