@@ -7,7 +7,7 @@ import sys, os
 from opencv.cv import *
 from opencv.highgui import *
 
-haar_file = 'haar/1256340790-0-haarcascade_fullbody.xml'
+haar_file = 'haar/1256617233-1-haarcascade_hand.xml'
 image_file = 'pictures/hand.jpg'
 
 def detectObject(image):
