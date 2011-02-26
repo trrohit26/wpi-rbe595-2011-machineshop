@@ -13,11 +13,11 @@ def detectObject(image):
   storage = cvCreateMemStorage(0)
   cvClearMemStorage(storage)
   cvEqualizeHist(grayscale, grayscale)
-  cascade = cvLoadHaarClassifierCascade('haarcascade_fullbody.xml',
+  cascade = cvLoadHaarClassifierCascade('haar/aGest.xml',
                                         cvSize(1,1))
   faces = cvHaarDetectObjects(grayscale, cascade, storage, 1.2, 2, 
                               CV_HAAR_DO_CANNY_PRUNING, cvSize(100,100))
-  
+  print faces
   if faces:
     for i in faces:
       cvRectangle(image, cvPoint( int(i.x), int(i.y)),
