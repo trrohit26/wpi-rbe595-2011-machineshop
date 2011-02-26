@@ -28,10 +28,10 @@ def detect(image):
                          cv.RGB(0, 255, 0), 3, 8, 0)
  
 if __name__ == "__main__":
-    print "OpenCV version: %s (%d, %d, %d)" % (cv.VERSION,
-                                               cv.MAJOR_VERSION,
-                                               cv.MINOR_VERSION,
-                                               cv.SUBMINOR_VERSION)
+    #print "OpenCV version: %s (%d, %d, %d)" % (cv.VERSION,
+    #                                           cv.MAJOR_VERSION,
+    #                                           cv.MINOR_VERSION,
+    #                                           cv.SUBMINOR_VERSION)
  
     print "Press ESC to exit ..."
  

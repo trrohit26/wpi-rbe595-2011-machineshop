@@ -7,14 +7,16 @@ import sys, os
 from opencv.cv import *
 from opencv.highgui import *
 
+haar_file = 'haar/aGest.xml'
+image_file = 'pictures/hand.jpg'
+
 def detectObject(image):
   grayscale = cvCreateImage(cvSize(640, 480), 8, 1)
   cvCvtColor(image, grayscale, CV_BGR2GRAY)
   storage = cvCreateMemStorage(0)
   cvClearMemStorage(storage)
   cvEqualizeHist(grayscale, grayscale)
-  cascade = cvLoadHaarClassifierCascade('haar/aGest.xml',
-                                        cvSize(1,1))
+  cascade = cvLoadHaarClassifierCascade(haar_file, cvSize(1,1))
   faces = cvHaarDetectObjects(grayscale, cascade, storage, 1.2, 2, 
                               CV_HAAR_DO_CANNY_PRUNING, cvSize(100,100))
   print faces
