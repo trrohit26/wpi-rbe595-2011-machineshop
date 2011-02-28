@@ -41,7 +41,7 @@ def detectObject(image):
   cascade = cvLoadHaarClassifierCascade(haar_file, cvSize(1,1))
   objects = cvHaarDetectObjects(grayscale, cascade, storage, 1.2, 2, 
                               CV_HAAR_DO_CANNY_PRUNING, cvSize(100,100))
-
+  print objects
   if objects:
     for i in objects:
       cvRectangle(image, cvPoint( int(i.x), int(i.y)),
