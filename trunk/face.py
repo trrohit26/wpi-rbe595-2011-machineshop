@@ -8,7 +8,7 @@ from opencv.cv import *
 from opencv.highgui import *
 
 haar_file = 'haar/1256617233-1-haarcascade_hand.xml'
-image_file = 'pictures/hand.jpg'
+image_file = 'pictures/hand4.jpg'
 
 def detectObject(image):
   grayscale = cvCreateImage(cvSize(640, 480), 8, 1)
