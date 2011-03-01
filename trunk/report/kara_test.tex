@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+%\usepackage{e-jc}
+\date{\dateline{Jan 4, 2007}{Feb 10, 2007}\\
+   \small Mathematics Subject Classification: 05C88} 
+\begin{document}
+
+\title{Computation and Analysis of Fixing Numbers \\ \vspace{5cm} \large{Kara Greenfield}\\\vspace{3mm} Worcester Polytechnic Institute } 
+%\subjclass{}
+%\date{\today}
+
+\maketitle
+\vspace{2cm}
+\newpage
+\abstract
+The fixing number of a graph is the smallest number k for which there exists a set of k vertices such that assigning a unique label to each of those k vertices removes all but the trivial automorphism.  We begin by improving on the fixing algorithm for trees presented by C\`aceres et al.  Gibbons and Laison proposed the Greedy Fixing Algorithm for graphs in general. We provide a class of counter-examples to prove that this algorithm is not well-defined. We then present a new general algorithm and prove its correctness, also showing that it isn't overwhelmingly more computationaly complex than the Greedy Fixing Algorithm. We also examine the distribution of fixing numbers of various categories of special graphs. 
+\
+\section{Introduction}
+
+\section{Fixing Numbers of Trees}
+
+The following algorithm is an equivalent alternative to the previous algorithm.  It is an original alternative which is slightly more efficient for trees which have many vertices of degree 2 because of a relatively simple pre-processing step. \\
+Let T be a tree, not a path.  (If T is a path, it's fixing number is 1.)  
+Give each edge in T weight 1.
+Consider T', with no vertices of degree 2, of which T is a weight-preserving subdivision.  
+    If T has no vertices of degree 2, then T=T'.
+Let S be the set of vertices in T' which are adjacent to a vertex of degree 1.
+For each v?S, let D(v) be the set of weights of the pendant edges incident with v.
+              Let $deg_k??(v)?$ be the number of edges of weight k which are incident to v.
+Calculate $deg_k??(v)?$ for all v?S, for all k?D(v)
+
+
+
+\section{Fixing Numbers of Graphs}
+
+\subsection{The Greedy Fixing Algorithm}
+
+\subsection{The S-interchange Fixing Algorithm}
+
+\section{Distribution of Fixing Numbers}
+	
+\end{document}
