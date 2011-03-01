@@ -55,12 +55,13 @@ def displayObject(image):
   cvDestroyWindow("objects")
   
 def main():
-  # Uses xawtv. Gstreamer can be used instead, but I found it much slower
-  os.system("v4lctl snap jpeg 640x480 /tmp/cam.jpg")
-  image = cvLoadImage("/tmp/cam.jpg")
-  detectObject(image)
-  displayObject(image)
-  cvSaveImage("/tmp/cam.jpg", image)
+  while 1:
+    # Uses xawtv. Gstreamer can be used instead, but I found it much slower
+    os.system("v4lctl snap jpeg 640x480 /tmp/cam.jpg")
+    image = cvLoadImage("/tmp/cam.jpg")
+    detectObject(image)
+    displayObject(image)
+    cvSaveImage("/tmp/cam.jpg", image)
 
 if __name__ == "__main__":
   main()
