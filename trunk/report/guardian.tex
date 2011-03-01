@@ -47,6 +47,8 @@ We decided to experiment with an external safety system that would augment the e
 
 For the industrial arm, a FANUC LR Mate 200iB six-axis arm was used due to availability\cite{fanuc}. Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}.
 
+For object (hand) detection, the incoming images were converted to grayscale and passed through a haar classifier cascade. Due to available time, an in-house haar classifier cascade was not trained, but a freely available, open-source one was made use of\cite{haar-hands}.
+
 \section{Results}
 
 
