@@ -45,12 +45,12 @@ We decided to experiment with an external safety system that would augment the e
 
 %This project spans two courses, WPI-CS/RBE 595 Human-Robot Interaction and WPI-RBE 501 Robot Dynamics. In it's current state, this project mainly reflects Human-Robot Interaction, at the time of writing, Robot Dynamics is still in progress.
 
-For the industrial arm, a FANUC LR Mate 200iB six-axis arm was used due to availability\cite{fanuc}. Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}.
+For the industrial arm, a FANUC LR Mate 200iB six-axis arm was used due to availability\cite{fanuc}. The available gripper has no force feedback, a separate module is necessary. 
 
-For object (hand) detection, the incoming images were converted to grayscale and passed through a haar classifier cascade. Due to available time, an in-house haar classifier cascade was not trained, but a freely available, open-source one was made use of\cite{haar-hands}.
+Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}. For object (hand) detection, the incoming images were converted to grayscale and passed through a haar classifier cascade. Due to available time, an in-house haar classifier cascade was not trained, but a freely available, open-source one was made use of\cite{haar-hands}.
 
 \section{Results}
-
+Overall, there was significant lag capturing frames from the camera's feed. This was determined via wallclock to average around 2 seconds. When moving at approximately 1ft/s at a distance of 2 feet, the hand was able to traverse the viewport (1ft/s being an acceptable speed for cutting wood with a circular saw\cite{sawstop}.)
 
 \section{Discussion}
 
