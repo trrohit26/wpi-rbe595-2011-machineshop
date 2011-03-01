@@ -47,12 +47,18 @@ We decided to experiment with an external safety system that would augment the e
 
 For the industrial arm, a FANUC LR Mate 200iB six-axis arm was used due to availability\cite{fanuc}. The available gripper has no force feedback, a separate module is necessary. 
 
-Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}. For object (hand) detection, the incoming images were converted to grayscale and passed through a haar classifier cascade. Due to available time, an in-house haar classifier cascade was not trained, but a freely available, open-source one was made use of\cite{haar-hands}.
+Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}. To capture a frame of video from the camera, v4lctl (provided by xawtv) was invoked via a system call, which then transcoded and wrote it's output to a temporary file, which was then loaded back into OpenCV. The incoming images were then converted to grayscale and passed through a haar classifier cascade. Due to available time, an in-house haar classifier cascade was not trained, but a freely available, open-source one was made use of\cite{haar-hands}.
 
 \section{Results}
 Overall, there was significant lag capturing frames from the camera's feed. This was determined via wallclock to average around 2 seconds. When moving at approximately 1ft/s at a distance of 2 feet, the hand was able to traverse the viewport (1ft/s being an acceptable speed for cutting wood with a circular saw\cite{sawstop}.)
 
+The haar classifier cascade that was used had trouble detecting hands that were not spread out (at least one clear verticle finger), and was not able to detect hands at an angle. Multiple hands were detected fine, however multiple hands led to an increase in mistaking other patches of skin for hands. Background clutter that was not skin-tone did not seem to interfere with hand detection, as long as the hand maintained the proper angles and clear fingers. Held objects introduced some error, but hands were still detected as long as fingers were visible. However, this required holding objects in a very unnatural position, and had limited range (the maximum range for this pose seemed to be under 4 feet.)
+
+Sample videos were submitted with this paper, and are also available in the code repository\cite{google-code}.
+
 \section{Discussion}
+A significant problem with the system in it's current incarnation is the lag in the video camera. While there was not time to compare the latency of the python script to a natively compiled C++ version, any speed differences were eclipsed by capturing frames from the video stream. It appears that the use of an external system call, and using a file as a pipe introduced a larger speed trade-off than anticipated. While a C++ rewrite may not be necessary, this section of code should be replaced by one that initializes the camera, and simply captures a frame from the stream when required.
+
 
 
 \section{Conclusion}
@@ -64,3 +70,4 @@ Overall, there was significant lag capturing frames from the camera's feed. This
 \bibliography{references.bib}
 
 \end{document}
+
