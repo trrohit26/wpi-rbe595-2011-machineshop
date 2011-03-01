@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 
-%\usepackage{fullpage}
+\usepackage{fullpage}
+%\usepackage{url}
 
 % Titlepage
 \title{Robot-augmented safety in machine shops\\}
@@ -33,14 +34,18 @@ A significant number of people are injured or maimed due to accidents in machine
 
 There is very little work being done on external methods to prevent injury in machine shops, most research is focused on building more advanced safety features into the machines themselves.
 
-The most popular method is capacitive sensors to detect flesh, and stop the blade as soon as possible (potentially destructively.) SawStop is a leading company in this area. They market a system that can stop a saw blade from rotating at 4,000 RPM in less than 5ms (destructive to the blade only), which they claim will only cause a nick on ones finger. However 4,000 RPM is only sufficient for cutting wood, metals are cut at a higher speed, which may result in a longer braking time.
+The most popular method is capacitive sensors to detect flesh, and stop the blade as soon as possible (potentially destructively.) SawStop is a leading company in this area. They market a system that can stop a saw blade from rotating at 4,000 RPM in less than 5ms (destructive to the blade only), which they claim will only cause a nick on ones finger\cite{sawstop}. However 4,000 RPM is only sufficient for cutting wood, metals are cut at a higher speed, which may result in a longer braking time.
 
 In addition to brakes, some machines implement guards\cite{HKUST:safety}. Most guards are reactive, to prevent further injury, such as limbs being pulled into the machine, however, there are some proactive guards, such as two-handed control devices, which only function if both hands are on the controls.
 
 But with all the technology available, a lot of the safety implemented is sociological. In many shops, including the WPI ones, there are simple rules covering proper eye protection, and clothing restrictions to avoid becoming caught or pulled into machines\cite{WPI:safety}.
 
 \section{Approach}
-We decided to experiment with an external safety system that would augment the existing ones. Our vision was a video camera attached to each machine aimed at the workspace and tool. Next to the machine would be a mounted industrial arm, whose workspace coincided with that of the tool, and included unrestricted access to the operator's limbs.
+We decided to experiment with an external safety system that would augment the existing ones. Our vision was a video camera attached to each machine aimed at the workspace and tool. Next to the machine would be a mounted industrial arm, whose workspace coincided with that of the tool, and included unrestricted access to the operator's limbs. If the operator was in danger of intersecting with the tool, the industrial arm would be able to shield the tool, or in worse case, grab the operator's arm and remove it from harm.
+
+%This project spans two courses, WPI-CS/RBE 595 Human-Robot Interaction and WPI-RBE 501 Robot Dynamics. In it's current state, this project mainly reflects Human-Robot Interaction, at the time of writing, Robot Dynamics is still in progress.
+
+For the industrial arm, a FANUC LR Mate 200iB six-axis arm was used due to availability\cite{fanuc}. Software was developed under a WMware Fusion 3.1.2 image of Xubuntu 10.10 utilizing OpenCV 2.1.0. The video camera used was the built in camera on a Macbook (640x480 output). The code was written in python, and is available freely under the BSD license\cite{google-code}.
 
 \section{Results}
 

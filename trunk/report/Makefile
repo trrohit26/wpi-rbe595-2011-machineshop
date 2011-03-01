@@ -25,8 +25,8 @@ remove_pdfs:
 
 run:
 	make remove_pdfs
-	make 
-	make 
+	make
+	make
 	make clean
 	- acroread $(file)
 	- /usr/bin/open '$(file)'
