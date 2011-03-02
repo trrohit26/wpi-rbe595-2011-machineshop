@@ -11,7 +11,7 @@
 	<key>DocPrefMainSplitterValue</key>
 	<string>553.00000000000000000000</string>
 	<key>DocPrefPlayheadTime</key>
-	<string>0</string>
+	<string>1148</string>
 	<key>DocPrefPreviewScaleValue</key>
 	<string>1.00000000000000000000</string>
 	<key>DocPrefTrackHeights</key>
@@ -27,6 +27,6 @@
 	<key>DocPrefZoomValue</key>
 	<string>0.47748455462649797010</string>
 	<key>SaveAsStandaloneProject</key>
-	<real>0.0</real>
+	<true/>
 </dict>
 </plist>
