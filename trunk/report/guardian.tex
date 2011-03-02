@@ -27,18 +27,18 @@
 %\tableofcontents
 
 \abstract
-A significant number of people are injured or permanently maimed due to accidents in machine shops. While tools have gotten safer, they have reached a plateau and we believe an external source is required to further safen machine shops. This project makes use of a video camera and an industrial arm to intercept a operator's arm if it is about to collide with a tool. However, there is still alot of work to be done in both computer vision and robotic manipulation before this is truly viable.
+A significant number of people are injured or permanently maimed due to accidents in machine shops. While tools have gotten safer, they have reached a plateau and we believe an external source is required to further safen machine shops. This project makes use of a video camera and an industrial arm to intercept a operator's arm if it is about interact unsafely with a machine. However, there is still a lot of work to be done in both computer vision and robotic manipulation before this is truly viable.
 
 \section{Introduction}
 A significant number of people are injured or maimed due to accidents in machine shops, and many deaths still occur. Brookhaven National Laboratory reports 18,000 annual amputations, lacerations, crushing injuries, abrasions, and over 800 deaths\cite{BNL:safety}. Common causes of injury in machine shops are, but not limited too, coming into contact with the machine, or being trapped between material and the machine, becoming entangled in the machine, being struck by ejected machinery parts, or being struck by ejected material\cite{HKUST:safety}.
 
 There is very little work being done on external methods to prevent injury in machine shops, most research is focused on building more advanced safety features into the machines themselves.
 
-The most popular method is capacitive sensors to detect flesh, and stop the blade as soon as possible (potentially destructively.) SawStop is a leading company in this area. They market a system that can stop a saw blade from rotating at 4,000 RPM in less than 5ms (destructive to the blade only), which they claim will only cause a nick on ones finger\cite{sawstop}. However 4,000 RPM is only sufficient for cutting wood, metals are cut at a higher speed, which may result in a longer braking time.
+The most popular method is capacitive sensors to detect flesh, and stop the blade as soon as possible (potentially destructively.) SawStop is a leading company in this area. They market a system that can stop a saw blade from rotating at 4,000 RPM in less than 5ms (destructive to the blade only), which they claim will only cause a nick on ones finger\cite{sawstop}. However 4,000 RPM is only sufficient for cutting wood, metals are cut at a higher speed, which may result in a longer braking time, which they do not reference.
 
-In addition to brakes, some machines implement guards\cite{HKUST:safety}. Most guards are reactive, to prevent further injury, such as limbs being pulled into the machine, however, there are some proactive guards, such as two-handed control devices, which only function if both hands are on the controls.
+In addition to brakes, some machines implement guards. Most guards are reactive, to prevent further injury, such as limbs being pulled into the machine, however, there are some proactive guards, such as two-handed control devices, which only function if both hands are on the controls\cite{HKUST:safety}.
 
-But with all the technology available, a lot of the safety implemented is sociological. In many shops, including the WPI ones, there are simple rules covering proper eye protection, and clothing restrictions to avoid becoming caught or pulled into machines\cite{WPI:safety}.
+But with all the technology available, a lot of the safety implemented is sociological. In many shops, including the WPI ones, there are simple rules covering proper eye protection, and loose clothing restrictions to avoid becoming caught or pulled into machines\cite{WPI:safety}.
 
 \section{Approach}
 We decided to experiment with an external safety system that would augment the existing ones. Our vision was a video camera attached to each machine aimed at the workspace and tool. Next to the machine would be a mounted industrial arm, whose workspace coincided with that of the tool, and included unrestricted access to the operator's limbs. If the operator was in danger of intersecting with the tool, the industrial arm would be able to shield the tool, or in worse case, grab the operator's arm and remove it from harm.
@@ -68,7 +68,7 @@ Other minor software problems encountered involved the boxes around hands at clo
 \section{Conclusion}
 In conclusion, we do not believe that vision systems are in a position to reliably track hands in a machine shop environment combined with an external safety system.
 
-For this system to even stand a chance of being competitive with capacitive braking systems (approximately 5ms response time,) a complete rewrite of this system would be required, making use of a video stream rather than discrete photo captures, and a natively compiled language. In addition, haar classifier cascades may be less appropriate than a well-tuned edge identification algorithm.
+For this system to even stand a chance of being competitive with capacitive braking systems (approximately 5ms response time,) a complete rewrite of this system would be required, making use of a video stream rather than discrete photo captures, and a natively compiled language. In addition, haar classifier cascades may be less appropriate than a well-tuned edge identification algorithm (machine shops are a largely controlled environment.)
 
 This research suggests that for now, better built in safety devices on machines and good shop guidelines will be able to reduce accidents the most.
 
