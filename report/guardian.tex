@@ -61,12 +61,16 @@ Sample videos were submitted with this paper, and are also available in the code
 \section{Discussion}
 A significant problem with the system in it's current incarnation is the lag in the video camera. While there was not time to compare the latency of the python script to a natively compiled C++ version, any speed differences were eclipsed by capturing frames from the video stream. It appears that the use of an external system call, and using a file as a pipe introduced a larger speed trade-off than anticipated. While a C++ rewrite may not be necessary, this section of code should be replaced by one that initializes the camera, and simply captures a frame from the stream when required.
 
-We were also largely unsatisfied with the haar classifier cascade that we used. If it were not for time constraints, we would have set up a video camera in the machine shop, as our system would only be working under very constrained environments. The poses the classifier was trained on were largely spread hands, and seemed to rely on fingers for detection. This only allowed for straight-on views of the hand, any large angle obscured the fingers, and caused the classifier to fail. Common positions for feeding material through saws involve a slightly curled hand, which would not currently be picked up.
+We were also largely unsatisfied with the haar classifier cascade that we used. If it were not for time constraints, we would have set up a video camera in the machine shop, as our system would only be working under very constrained environments. The poses the haar classifier cascade was trained on were largely spread hands, and seemed to rely on fingers for detection. This only allowed for straight-on views of the hand, any large angle obscured the fingers, and caused the haar classifier cascade to fail. Common positions for feeding material through saws involve a slightly curled hand, which would not currently be picked up.
 
 Other minor software problems encountered involved the boxes around hands at close ranges (approximately 2 feet) were excessively large, and prone to error and jitter. They were mostly accurate at 4-6 feet, but still prone to jitter and losing the hand. This does not suggest that they would be able to reliably track fingers in a typical machine shop environment.
 
 \section{Conclusion}
+In conclusion, we do not believe that vision systems are in a position to reliably track hands in a machine shop environment combined with an external safety system.
 
+For this system to even stand a chance of being competitive with capacitive braking systems (approximately 5ms response time,) a complete rewrite of this system would be required, making use of a video stream rather than discrete photo captures, and a natively compiled language. In addition, haar classifier cascades may be less appropriate than a well-tuned edge identification algorithm.
+
+This research suggests that for now, better built in safety devices on machines and good shop guidelines will be able to reduce accidents the most.
 
 % References
 \addcontentsline{toc}{section}{References}
