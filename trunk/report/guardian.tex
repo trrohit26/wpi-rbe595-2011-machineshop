@@ -54,12 +54,16 @@ Overall, there was significant lag capturing frames from the camera's feed. This
 
 The haar classifier cascade that was used had trouble detecting hands that were not spread out (at least one clear verticle finger), and was not able to detect hands at an angle. Multiple hands were detected fine, however multiple hands led to an increase in mistaking other patches of skin for hands. Background clutter that was not skin-tone did not seem to interfere with hand detection, as long as the hand maintained the proper angles and clear fingers. Held objects introduced some error, but hands were still detected as long as fingers were visible. However, this required holding objects in a very unnatural position, and had limited range (the maximum range for this pose seemed to be under 4 feet.)
 
+The haar classifier cascade was surprisingly resilient to skin tone. Under proper lighting, a variety of skin tones ranging from black to white were detected flawlessly. However, under suboptimal lighting, only white and light brown were able to be detected.
+
 Sample videos were submitted with this paper, and are also available in the code repository\cite{google-code}.
 
 \section{Discussion}
 A significant problem with the system in it's current incarnation is the lag in the video camera. While there was not time to compare the latency of the python script to a natively compiled C++ version, any speed differences were eclipsed by capturing frames from the video stream. It appears that the use of an external system call, and using a file as a pipe introduced a larger speed trade-off than anticipated. While a C++ rewrite may not be necessary, this section of code should be replaced by one that initializes the camera, and simply captures a frame from the stream when required.
 
+We were also largely unsatisfied with the haar classifier cascade that we used. If it were not for time constraints, we would have set up a video camera in the machine shop, as our system would only be working under very constrained environments. The poses the classifier was trained on were largely spread hands, and seemed to rely on fingers for detection. This only allowed for straight-on views of the hand, any large angle obscured the fingers, and caused the classifier to fail. Common positions for feeding material through saws involve a slightly curled hand, which would not currently be picked up.
 
+Other minor software problems encountered involved the boxes around hands at close ranges (approximately 2 feet) were excessively large, and prone to error and jitter. They were mostly accurate at 4-6 feet, but still prone to jitter and losing the hand. This does not suggest that they would be able to reliably track fingers in a typical machine shop environment.
 
 \section{Conclusion}
 
