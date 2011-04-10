@@ -37,8 +37,8 @@ size = cv.cvSize(640, 480)
 camera = highgui.cvCreateCameraCapture(0)
 
 def detectObject(image):
-  grayscale = cv.cvCreateImage(size, 8, highgui.CVCVTIMG_FLIP)
-  #print highgui.CV_CVTIMG_FLIP
+  grayscale = cv.cvCreateImage(size, 8, 1)
+  #cv.cvFlip(image, None, 1)
   cv.cvCvtColor(image, grayscale, cv.CV_BGR2GRAY)
   storage = cv.cvCreateMemStorage(0)
   cv.cvClearMemStorage(storage)
@@ -66,7 +66,7 @@ def main():
     detectObject(image)
     highgui.cvShowImage("Guardian", image)
 
-    if highgui.cvWaitKey(10) != -1:
+    if highgui.cvWaitKey(20) != -1:
       break
   highgui.cvDestroyWindow("Guardian")
 
