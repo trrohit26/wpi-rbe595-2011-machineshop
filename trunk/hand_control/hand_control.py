@@ -33,7 +33,8 @@ from opencv import cv
 from opencv import highgui
 
 haar_file = '../haar/1256617233-1-haarcascade_hand.xml'
-size = cv.cvSize(640, 480)
+#size = cv.cvSize(640, 480)
+size = cv.cvSize(1280, 800)
 camera = highgui.cvCreateCameraCapture(0)
 
 def detectObject(image):
