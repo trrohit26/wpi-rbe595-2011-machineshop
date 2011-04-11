@@ -55,17 +55,18 @@ def detectObject(image):
 
   # Draw dots where hands are
   if objects:
-    centers = []
     for i in objects:
       #cv.cvRectangle(image, cv.cvPoint( int(i.x), int(i.y)),
       #               cv.cvPoint(int(i.x+i.width), int(i.y+i.height)),
       #               cv.CV_RGB(0,255,0), 3, 8, 0)
-      centers.append(cv.cvPoint(int(i.x+i.width/2), int(i.y+i.height/2)))
-      cv.cvCircle(image, centers[-1], 10, cv.CV_RGB(0,0,0), 5,8, 0)
-
-      
-
-  return centers
+      center = cv.cvPoint(int(i.x+i.width/2), int(i.y+i.height/2))
+      cv.cvCircle(image, center, 10, cv.CV_RGB(0,0,0), 5,8, 0)
+      # Left side check
+      if center > box_forward_left[0] and center < box_backwards_left[1]:
+        set_speed('left', center)
+      # Right side check
+      if center > box_forward_right[0] and center < box_backwards_right[1]:
+        set_speed('right', center)
 
 def get_image():
   img = highgui.cvQueryFrame(camera)
@@ -83,11 +84,14 @@ def draw_gui(image):
   cv.cvRectangle(image,box_forward_right[0],box_forward_right[1],
                  cv.CV_RGB(0,255,0),3,8,0)
 
+def set_speed(side, center):
+  pass
+
 def main():
   highgui.cvNamedWindow("Guardian", 1)
   while True:
     image = highgui.cvQueryFrame(camera)
-    centers = detectObject(image)
+    detectObject(image)
 
     draw_gui(image)
     highgui.cvShowImage("Guardian", image)
