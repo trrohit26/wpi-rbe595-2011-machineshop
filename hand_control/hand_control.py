@@ -33,13 +33,17 @@ from opencv import cv
 from opencv import highgui
 
 haar_file = '../haar/1256617233-1-haarcascade_hand.xml'
-#size = cv.cvSize(640, 480)
-size = cv.cvSize(1280, 800)
+size = cv.cvSize(640, 480)
 camera = highgui.cvCreateCameraCapture(0)
+
+box_forward_left = (cv.cvPoint(40,40), cv.cvPoint(140,240))
+box_forward_right = (cv.cvPoint(500,40), cv.cvPoint(600,240))
+box_backwards_left = (cv.cvPoint(40,240), cv.cvPoint(140,440))
+box_backwards_right = (cv.cvPoint(500,240), cv.cvPoint(600,440))
 
 def detectObject(image):
   grayscale = cv.cvCreateImage(size, 8, 1)
-  #cv.cvFlip(image, None, 1)
+  cv.cvFlip(image, None, 1)
   cv.cvCvtColor(image, grayscale, cv.CV_BGR2GRAY)
   storage = cv.cvCreateMemStorage(0)
   cv.cvClearMemStorage(storage)
@@ -49,22 +53,43 @@ def detectObject(image):
                                    cv.CV_HAAR_DO_CANNY_PRUNING,
                                    cv.cvSize(100,100))
 
+  # Draw dots where hands are
   if objects:
+    centers = []
     for i in objects:
-      cv.cvRectangle(image, cv.cvPoint( int(i.x), int(i.y)),
-                     cv.cvPoint(int(i.x+i.width), int(i.y+i.height)),
-                     cv.CV_RGB(0,255,0), 3, 8, 0)
+      #cv.cvRectangle(image, cv.cvPoint( int(i.x), int(i.y)),
+      #               cv.cvPoint(int(i.x+i.width), int(i.y+i.height)),
+      #               cv.CV_RGB(0,255,0), 3, 8, 0)
+      centers.append(cv.cvPoint(int(i.x+i.width/2), int(i.y+i.height/2)))
+      cv.cvCircle(image, centers[-1], 10, cv.CV_RGB(0,0,0), 5,8, 0)
+
+      
+
+  return centers
 
 def get_image():
   img = highgui.cvQueryFrame(camera)
   #img = opencv.cvGetMat(img)
   return opencv.adaptors.Ipl2PIL(img)
 
+def draw_gui(image):
+  # Reverse areas
+  cv.cvRectangle(image,box_backwards_left[0],box_backwards_left[1],
+                 cv.CV_RGB(255,0,0),3,8,0)
+  cv.cvRectangle(image,box_backwards_right[0],box_backwards_right[1],
+                 cv.CV_RGB(255,0,0),3,8,0)
+  # Forward areas
+  cv.cvRectangle(image,box_forward_left[0],box_forward_left[1],                             cv.CV_RGB(0,255,0),3,8,0)
+  cv.cvRectangle(image,box_forward_right[0],box_forward_right[1],
+                 cv.CV_RGB(0,255,0),3,8,0)
+
 def main():
   highgui.cvNamedWindow("Guardian", 1)
   while True:
     image = highgui.cvQueryFrame(camera)
-    detectObject(image)
+    centers = detectObject(image)
+
+    draw_gui(image)
     highgui.cvShowImage("Guardian", image)
 
     if highgui.cvWaitKey(20) != -1:
