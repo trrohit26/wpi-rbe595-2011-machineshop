@@ -31,15 +31,16 @@ import os
 import opencv
 from opencv import cv
 from opencv import highgui
+import playerc
 
 haar_file = '../haar/1256617233-1-haarcascade_hand.xml'
 size = cv.cvSize(640, 480)
 camera = highgui.cvCreateCameraCapture(0)
 
-box_forward_left = (cv.cvPoint(40,40), cv.cvPoint(140,240))
-box_forward_right = (cv.cvPoint(500,40), cv.cvPoint(600,240))
-box_backwards_left = (cv.cvPoint(40,240), cv.cvPoint(140,440))
-box_backwards_right = (cv.cvPoint(500,240), cv.cvPoint(600,440))
+box_forward_left = (cv.cvPoint(50,60), cv.cvPoint(140,240))
+box_forward_right = (cv.cvPoint(500,60), cv.cvPoint(590,240))
+box_backwards_left = (cv.cvPoint(50,240), cv.cvPoint(140,420))
+box_backwards_right = (cv.cvPoint(500,240), cv.cvPoint(590,420))
 
 def detectObject(image):
   grayscale = cv.cvCreateImage(size, 8, 1)
@@ -68,6 +69,9 @@ def detectObject(image):
       if center > box_forward_right[0] and center < box_backwards_right[1]:
         set_speed('right', center)
 
+def handler(signum, frame):
+  sys.exit(0)
+
 def get_image():
   img = highgui.cvQueryFrame(camera)
   #img = opencv.cvGetMat(img)
@@ -88,7 +92,10 @@ def set_speed(side, center):
   pass
 
 def main():
+  signal.signal(signal.SIGINT, handler)
   highgui.cvNamedWindow("Guardian", 1)
+  init_robot()
+
   while True:
     image = highgui.cvQueryFrame(camera)
     detectObject(image)
@@ -99,6 +106,15 @@ def main():
     if highgui.cvWaitKey(20) != -1:
       break
   highgui.cvDestroyWindow("Guardian")
+
+def init_robot():
+  # Stage
+  #robot = playerc.playerc_client(None, "localhost", 6665)
+  # Corobot
+  robot = playerc.playerc_client(None, "corobot-w.wifi.wpi.edu", 6665)
+
+  robot.connect()
+  robot.read()
 
 if __name__ == "__main__":
   main()
