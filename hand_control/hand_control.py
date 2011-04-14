@@ -28,6 +28,7 @@
 
 import sys
 import os
+import signal
 import opencv
 from opencv import cv
 from opencv import highgui
@@ -36,6 +37,11 @@ import playerc
 haar_file = '../haar/1256617233-1-haarcascade_hand.xml'
 size = cv.cvSize(640, 480)
 camera = highgui.cvCreateCameraCapture(0)
+
+max_speed = 1 # m/s
+speed_left = 0
+speed_right = 0
+speed = (0, 0)
 
 box_forward_left = (cv.cvPoint(50,60), cv.cvPoint(140,240))
 box_forward_right = (cv.cvPoint(500,60), cv.cvPoint(590,240))
@@ -63,10 +69,10 @@ def detectObject(image):
       center = cv.cvPoint(int(i.x+i.width/2), int(i.y+i.height/2))
       cv.cvCircle(image, center, 10, cv.CV_RGB(0,0,0), 5,8, 0)
       # Left side check
-      if center > box_forward_left[0] and center < box_backwards_left[1]:
+      if center.x > box_forward_left[0].x and center.x < box_backwards_left[1].x and center.y > box_forward_left[0].y and center.y < box_backwards_left[1].y:
         set_speed('left', center)
       # Right side check
-      if center > box_forward_right[0] and center < box_backwards_right[1]:
+      if center.x > box_forward_right[0].x and center.x < box_backwards_right[1].x and center.y > box_forward_right[0].y and center.y < box_backwards_right[1].y:
         set_speed('right', center)
 
 def handler(signum, frame):
@@ -89,16 +95,38 @@ def draw_gui(image):
                  cv.CV_RGB(0,255,0),3,8,0)
 
 def set_speed(side, center):
-  pass
+  height = box_forward_left[1].y - box_forward_left[0].y
+  magnitude = float(center.y - height)
+  magnitude = float(100 * magnitude / height)
+
+  if side == 'left': speed_left = magnitude
+  if side == 'right': speed_right = magnitude
+
+  speed = (max_speed * (speed_left + speed_right)/2, arctan((speed_right - speed_left)/10))
 
 def main():
-  signal.signal(signal.SIGINT, handler)
+  # Initialization
   highgui.cvNamedWindow("Guardian", 1)
-  init_robot()
+
+  signal.signal(signal.SIGINT, handler)
+  # Stage
+  #robot = playerc.playerc_client(None, "localhost", 6665)
+  # Corobot
+  robot = playerc.playerc_client(None, "corobot-w.wifi.wpi.edu", 6665)
+
+  robot.connect()
+
+  p2dproxy = playerc.playerc_position2d(robot, 0)
+  p2dproxy.subscribe(playerc.PLAYERC_OPEN_MODE)
+  p2dproxy.get_geom()
+
+  robot.read()
 
   while True:
     image = highgui.cvQueryFrame(camera)
     detectObject(image)
+
+    p2dproxy.set_cmd_vel(speed[0], 0, speed[1], 0)
 
     draw_gui(image)
     highgui.cvShowImage("Guardian", image)
@@ -106,15 +134,6 @@ def main():
     if highgui.cvWaitKey(20) != -1:
       break
   highgui.cvDestroyWindow("Guardian")
-
-def init_robot():
-  # Stage
-  #robot = playerc.playerc_client(None, "localhost", 6665)
-  # Corobot
-  robot = playerc.playerc_client(None, "corobot-w.wifi.wpi.edu", 6665)
-
-  robot.connect()
-  robot.read()
 
 if __name__ == "__main__":
   main()
