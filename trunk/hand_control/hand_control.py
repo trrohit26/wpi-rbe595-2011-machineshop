@@ -26,9 +26,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import sys
-import os
-import signal
+import sys, os, signal
+import math
 import opencv
 from opencv import cv
 from opencv import highgui
@@ -95,14 +94,16 @@ def draw_gui(image):
                  cv.CV_RGB(0,255,0),3,8,0)
 
 def set_speed(side, center):
+  global speed_left, speed_right
+
   height = box_forward_left[1].y - box_forward_left[0].y
   magnitude = float(center.y - height)
-  magnitude = float(100 * magnitude / height)
+  magnitude = float(max_speed * magnitude / height)
 
   if side == 'left': speed_left = magnitude
   if side == 'right': speed_right = magnitude
 
-  speed = (max_speed * (speed_left + speed_right)/2, arctan((speed_right - speed_left)/10))
+  speed = ((speed_left + speed_right)/2, math.atan((speed_right - speed_left)/10))
 
 def main():
   # Initialization
