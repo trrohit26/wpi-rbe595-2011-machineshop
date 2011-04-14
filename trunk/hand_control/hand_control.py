@@ -135,6 +135,7 @@ def main():
     if highgui.cvWaitKey(20) != -1:
       break
   highgui.cvDestroyWindow("Guardian")
+  p2dproxy.set_cmd_vel(0, 0, 0, 0)
 
 if __name__ == "__main__":
   main()
