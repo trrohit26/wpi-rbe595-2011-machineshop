@@ -37,10 +37,10 @@ haar_file = '../haar/1256617233-1-haarcascade_hand.xml'
 size = cv.cvSize(640, 480)
 camera = highgui.cvCreateCameraCapture(0)
 
-max_speed = 0.5 # m/s
-speed_left = 0
-speed_right = 0
-speed = (0, 0)
+max_speed = 0.1 # m/s
+speed_left = 0.0
+speed_right = 0.0
+speed = (0.0, 0.0)
 
 box_forward_left = (cv.cvPoint(50,60), cv.cvPoint(140,240))
 box_forward_right = (cv.cvPoint(500,60), cv.cvPoint(590,240))
@@ -97,13 +97,15 @@ def set_speed(side, center):
   global speed, speed_left, speed_right
 
   height = box_forward_left[1].y - box_forward_left[0].y
-  magnitude = float(height - center.y)
-  magnitude = float(max_speed * magnitude / height)
+  # Transform y cordinate into a percentage
+  magnitude = float(center.y - box_forward_left[1].y)
+  magnitude = float(magnitude / height)
 
-  if side == 'left': speed_left = magnitude
-  if side == 'right': speed_right = magnitude
+  if side == 'left': speed_left = max_speed * magnitude
+  if side == 'right': speed_right = math.pi/2 * magnitude
 
-  speed = (float((speed_left + speed_right)/2), float(math.atan((speed_right - speed_left)/0.3)))
+  #speed = (float((speed_left + speed_right)/2), float(math.atan((speed_right - speed_left)/0.3)))
+  speed = (speed_left, speed_right)
   print speed
 
 def main():
